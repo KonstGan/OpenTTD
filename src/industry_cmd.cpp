@@ -2573,6 +2573,19 @@ static void UpdateIndustryStatistics(Industry *i)
 {
 	auto month = TimerGameEconomy::month;
 	UpdateValidHistory(i->valid_history, HISTORY_YEAR, month);
+	/* Energy system: electricity produced by power stations = coal accepted last month */
+	{
+		uint32_t coal_accepted = 0;
+		for (const auto &a : i->accepted) {
+			if (!IsValidCargoType(a.cargo)) continue;
+			if (CargoSpec::Get(a.cargo)->label == CT_COAL) {
+				if (a.history != nullptr) {
+					coal_accepted += (*a.history)[LAST_MONTH].accepted;
+				}
+			}
+		}
+		i->electricity_produced = coal_accepted;
+	}
 
 	for (auto &p : i->produced) {
 		if (IsValidCargoType(p.cargo)) {

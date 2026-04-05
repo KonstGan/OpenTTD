@@ -979,6 +979,12 @@ public:
 			}
 		}
 
+		/* Energy system: show electricity produced by power station */
+		if (i->electricity_produced > 0) {
+			ir.top += WidgetDimensions::scaled.vsep_wide;
+			DrawString(ir, GetString(STR_INDUSTRY_VIEW_ELECTRICITY_PRODUCED, i->electricity_produced));
+			ir.top += GetCharacterHeight(FS_NORMAL);
+		}
 		if (!i->text.empty()) {
 			ir.top += WidgetDimensions::scaled.vsep_wide;
 			ir.top = DrawStringMultiLine(ir, i->text.GetDecodedString(), TC_BLACK);

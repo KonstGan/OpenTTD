@@ -4280,6 +4280,7 @@ STR_INDUSTRY_VIEW_ACCEPT_CARGO_SUFFIX                           :{YELLOW}{0:STRI
 STR_INDUSTRY_VIEW_ACCEPT_CARGO_AMOUNT_SUFFIX                    :{YELLOW}{0:STRING}{BLACK}: {1:CARGO_SHORT} ожидает {3:STRING}
 STR_INDUSTRY_VIEW_ACCEPT_CARGO_NOSUFFIX                         :{YELLOW}{0:STRING}
 STR_INDUSTRY_VIEW_ACCEPT_CARGO_AMOUNT_NOSUFFIX                  :{YELLOW}{0:STRING}{BLACK}: {1:CARGO_SHORT} ожидает
+STR_INDUSTRY_VIEW_ELECTRICITY_PRODUCED                  :{BLACK}Произведено электроэнергии: {YELLOW}{NUM} МВт
 
 STR_CONFIG_GAME_PRODUCTION                                      :{WHITE}Изменить производительность (кратно 8, до 2040)
 STR_CONFIG_GAME_PRODUCTION_LEVEL                                :{WHITE}Изменить производительность (в процентах, до 800%)

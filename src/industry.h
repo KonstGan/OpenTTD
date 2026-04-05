@@ -133,6 +133,8 @@ struct Industry : IndustryPool::PoolItem<&_industry_pool> {
 
 	uint16_t random = 0; ///< Random value used for randomisation of all kinds of things
 
+	uint32_t electricity_produced = 0; ///< MWt of electricity produced last month (power stations only)
+
 	PersistentStorage *psa = nullptr; ///< Persistent storage for NewGRF industries.
 
 	Industry(IndustryID index, TileIndex tile = INVALID_TILE) : IndustryPool::PoolItem<&_industry_pool>(index), location(tile, 0, 0) {}
