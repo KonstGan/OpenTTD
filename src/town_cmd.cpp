@@ -439,6 +439,10 @@ static void ChangePopulation(Town *t, int mod)
 	InvalidateWindowData(WC_TOWN_DIRECTORY, 0, TDIWD_POPULATION_CHANGE);
 }
 
+static uint32_t GetHouseEnergyDemand(const HouseSpec *hs)
+{
+	return 5 + hs->population * 2;
+}
 /**
  * Get the total population, the sum of all towns in the world.
  * @return The calculated population of the world
@@ -492,7 +496,11 @@ static void AdvanceSingleHouseConstruction(TileIndex tile)
 	if (IsHouseCompleted(tile)) {
 		/* Now that construction is complete, we can add the population of the
 		 * building to the town. */
-		ChangePopulation(Town::GetByTile(tile), HouseSpec::Get(GetHouseType(tile))->population);
+		Town *t = Town::GetByTile(tile);
+		const HouseSpec *hs = HouseSpec::Get(GetHouseType(tile));
+
+		ChangePopulation(t, hs->population);
+		t->cache.energy_demand += GetHouseEnergyDemand(hs);
 		ResetHouseAge(tile);
 	}
 	MarkTileDirtyByTile(tile);
@@ -2772,6 +2780,7 @@ static void BuildTownHouse(Town *t, TileIndex tile, const HouseSpec *hs, HouseID
 
 		if (construction_stage == TOWN_HOUSE_COMPLETED) {
 			ChangePopulation(t, hs->population);
+			t->cache.energy_demand += GetHouseEnergyDemand(hs);
 		} else {
 			construction_counter = GB(construction_random, 2, 2);
 		}
@@ -3099,6 +3108,7 @@ void ClearTownHouse(Town *t, TileIndex tile)
 	/* Remove population from the town if the house is finished. */
 	if (IsHouseCompleted(tile)) {
 		ChangePopulation(t, -hs->population);
+		t->cache.energy_demand -= GetHouseEnergyDemand(hs);
 	}
 
 	t->cache.num_houses--;
